@@ -167,8 +167,11 @@ static void recepcao(void)
             continue;
         }
 
+        /* Hora de chegada: inicio da criacao do cliente (orientacao do professor) */
+        double chegada = agora_ms();
+
         /* Cria o processo cliente. vfork nao copia a memoria do pai (o filho
-         * so faz exec), por isso e mais rapido que fork: ~16% no tempo total */
+         * so faz exec), entao a criacao e mais rapida e sobra mais paciencia */
         pid_t pid = vfork();
         if (pid == 0) {
             execl("./cliente", "cliente", NULL);
@@ -180,9 +183,6 @@ static void recepcao(void)
         int status;
         while (waitpid(pid, &status, WUNTRACED | WNOHANG) == 0)
             ceder();
-
-        /* Hora de chegada: o cliente acabou de ser criado (ja existe e esta pronto) */
-        double chegada = agora_ms();
 
         /* Le o tempo de atendimento do arquivo demanda */
         int tempo = 0;

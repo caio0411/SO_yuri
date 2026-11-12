@@ -50,7 +50,9 @@ atendimento: atendimento.c
 analista: analista.c
 	$(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
 
+# Ligacao estatica deixa o exec do cliente mais rapido (sobra mais paciencia).
+# Se o sistema nao tiver a libc estatica, compila no modo normal.
 cliente: cliente.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
+	$(CC) $(CFLAGS) -static -o $@ $< $(LDLIBS) || $(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
 
 .PHONY: all run clean

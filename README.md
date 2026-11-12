@@ -49,5 +49,5 @@ Gerados durante a execução: `demanda.txt` (tempo de atendimento escrito pelo c
 - **Recepção:** cria cada cliente com `vfork` + `exec` e espera ele escrever `demanda.txt` e parar (`SIGSTOP`). Depois sorteia a prioridade (50% cada) e o coloca na fila, que tem no máximo 100 clientes.
 - **Atendente:** escolhe o cliente de prazo mais próximo (`chegada + paciência`) entre os que ainda podem sair satisfeitos. Acorda o cliente (`SIGCONT`), espera ele terminar e o `sem_atend` abrir, grava o PID no LNG protegido por `sem_block` e calcula a satisfação. A cada 10 atendimentos, acorda o Analista. Antes de terminar, acorda o Analista até o LNG ficar vazio.
 - **Analista:** nasce dormindo. Ao ser acordado, trava o LNG, imprime e apaga no máximo 10 PIDs, destrava e volta a dormir.
-- **Satisfação:** um cliente fica satisfeito se `(fim do atendimento − hora de chegada) ≤ paciência`. A hora de chegada é marcada quando o cliente termina de ser criado, pronto para entrar na fila.
+- **Satisfação:** um cliente fica satisfeito se `(fim do atendimento − hora de chegada) ≤ paciência`. A hora de chegada é marcada no início da criação do cliente.
 - **Parada com "s" (N = 0):** os clientes que ainda estão na fila são descartados e não entram na taxa. Todos os PIDs já atendidos são impressos antes de o programa terminar.
