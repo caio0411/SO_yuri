@@ -1,4 +1,4 @@
-/* Processo "Cliente" - fornecido pronto pelo professor (nao alterar). */
+/* Processo "Cliente". */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

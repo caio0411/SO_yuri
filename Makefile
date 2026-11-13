@@ -1,8 +1,5 @@
-# -pthread e necessario so para sem_open/sem_wait em versoes antigas da glibc.
-# Nenhuma pthread e criada: as threads sao do nosso escalonador (ucontext).
 CC = gcc
 CFLAGS = -Wall -O2
-LDLIBS = -pthread
 
 # Valores usados por "make run" (ex.: make run N=0 X=10)
 N = 100
@@ -45,14 +42,14 @@ clean:
 endif
 
 atendimento: atendimento.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
+	$(CC) $(CFLAGS) -o $@ $<
 
 analista: analista.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
+	$(CC) $(CFLAGS) -o $@ $<
 
 # Ligacao estatica deixa o exec do cliente mais rapido (sobra mais paciencia).
 # Se o sistema nao tiver a libc estatica, compila no modo normal.
 cliente: cliente.c
-	$(CC) $(CFLAGS) -static -o $@ $< $(LDLIBS) || $(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
+	$(CC) $(CFLAGS) -static -o $@ $< || $(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: all run clean
